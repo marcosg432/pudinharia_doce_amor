@@ -1,13 +1,18 @@
 {
-  "name": "cardapio_apresentativo",
+  "name": "pudinharia-doce-amor",
   "version": "1.0.0",
-  "description": "Senna Doce - Cardápio Digital",
-  "main": "index.html",
-  "scripts": {
-    "start": "node server.js",
-    "build": "echo 'Projeto estático - sem build'"
-  },
+  "private": true,
+  "description": "Cardápio digital — Pudinharia (site estático servido por Express + PM2)",
   "engines": {
     "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "pm2:start": "pm2 start ecosystem.config.cjs",
+    "pm2:reload": "pm2 reload ecosystem.config.cjs",
+    "pm2:stop": "pm2 stop pudinharia-doce-amor"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
   }
 }

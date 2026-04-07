@@ -1,9 +1,11 @@
 /**
- * Senna Doce - Cardápio Digital
+ * Pudinharia Doce Sonho — Cardápio digital
  * Script principal - animações e funcionalidades
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    initProdutoMetaPreco();
+
     // Carrossel da hero section
     initHeroCarousel();
     
@@ -18,9 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Header com efeito no scroll
     initHeaderScroll();
-    
-    // Modal "Saiba mais" do produto
-    initProdutoModal();
 
     // Botão Voltar ao Topo
     initScrollToTop();
@@ -167,132 +166,43 @@ function initSmoothScroll() {
 }
 
 /**
- * Animações de entrada ao scroll
+ * Animações de entrada ao scroll (CSS: .js-scroll-reveal → .is-revealed)
+ * Hover nos cards usa transform próprio; sem !important em transform.
  */
 function initScrollAnimations() {
     const animatedElements = document.querySelectorAll(
-        '.categoria-card, .galeria-item, .avaliacao-card, .produto-card, .produto-card-home'
+        [
+            '.categoria-card',
+            '.galeria-item',
+            '.avaliacao-card',
+            '.produto-card',
+            '.produto-card-home',
+            '#produtos .section-heading',
+            '.galeria .section-heading',
+            '.avaliacoes .section-heading'
+        ].join(', ')
     );
 
     const observerOptions = {
         root: null,
-        rootMargin: '0px 0px -80px 0px',
-        threshold: 0.1
+        rootMargin: '0px 0px -72px 0px',
+        threshold: 0.08
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 80);
+                    entry.target.classList.add('is-revealed');
+                }, index * 70);
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    });
-
-    const style = document.createElement('style');
-    style.textContent = `
-        .categoria-card.visible,
-        .galeria-item.visible,
-        .avaliacao-card.visible,
-        .produto-card.visible,
-        .produto-card-home.visible {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-    `;
-    document.head.appendChild(style);
-
-    animatedElements.forEach(el => observer.observe(el));
-}
-
-/**
- * Modal Produto - Saiba mais
- * Abre modal com dados do produto via data attributes
- */
-function initProdutoModal() {
-    const modal = document.getElementById('produtoModal');
-    if (!modal) return;
-
-    const modalImg = modal.querySelector('.modal-produto-img');
-    const modalNome = modal.querySelector('.modal-produto-nome');
-    const modalDescricao = modal.querySelector('.modal-produto-descricao');
-    const modalIngredientes = modal.querySelector('.modal-produto-ingredientes');
-    const ingredientesWrap = modal.querySelector('.modal-produto-ingredientes-wrap');
-    const modalPedido = modal.querySelector('.modal-produto-pedido');
-    const modalWhatsapp = modal.querySelector('.modal-produto-whatsapp');
-    const btnClose = modal.querySelector('.modal-close');
-
-    function getImagemFromCard(card) {
-        const imgDiv = card.querySelector('.produto-img, .produto-img-home');
-        if (!imgDiv) return '';
-        const style = imgDiv.getAttribute('style') || '';
-        const match = style.match(/url\(['"]?([^'")]+)['"]?\)/);
-        return match ? match[1].trim() : '';
-    }
-
-    function openModal(card) {
-        const imagem = card.dataset.produtoImagem || getImagemFromCard(card);
-        const nome = card.dataset.produtoNome || (card.querySelector('h3')?.textContent || '');
-        const descricao = card.dataset.produtoDescricao || card.querySelector('.produto-content p, .produto-content-home p')?.textContent || '';
-        const ingredientesStr = card.dataset.produtoIngredientes || '';
-        const pedido = card.dataset.produtoPedido || card.querySelector('.produto-preco')?.textContent || '';
-        const whatsapp = card.dataset.produtoWhatsapp || card.querySelector('a[href*="wa.me"]')?.getAttribute('href') || 'https://wa.me/5599999999999';
-
-        modalImg.style.backgroundImage = imagem ? `url('${imagem}')` : 'none';
-        modalNome.textContent = nome || 'Produto';
-        modalDescricao.textContent = descricao;
-        modalDescricao.style.display = descricao ? '' : 'none';
-        modalPedido.textContent = pedido;
-        modalPedido.style.display = pedido ? '' : 'none';
-        modalWhatsapp.href = whatsapp;
-
-        if (modalIngredientes) {
-            modalIngredientes.innerHTML = '';
-            if (ingredientesStr) {
-                const itens = ingredientesStr.split(/[,|]/).map(s => s.trim()).filter(Boolean);
-                itens.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = item;
-                    modalIngredientes.appendChild(li);
-                });
-            }
-            ingredientesWrap.classList.toggle('no-ingredientes', !ingredientesStr.trim());
-        }
-
-        modal.classList.add('ativo');
-        document.body.style.overflow = 'hidden';
-        modal.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeModal() {
-        modal.classList.remove('ativo');
-        document.body.style.overflow = '';
-        modal.setAttribute('aria-hidden', 'true');
-    }
-
-    document.querySelectorAll('.btn-saiba-mais').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const card = this.closest('.produto-card, .produto-card-home');
-            if (card) openModal(card);
-        });
-    });
-
-    if (btnClose) btnClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('ativo')) closeModal();
+    animatedElements.forEach((el) => {
+        el.classList.add('js-scroll-reveal');
+        observer.observe(el);
     });
 }
 
@@ -315,6 +225,51 @@ function initHeaderScroll() {
         }
 
         lastScroll = currentScroll;
+    });
+}
+
+/**
+ * Insere linha de tamanho + preço nos cards de produto (dados em data-produto-preco).
+ */
+function initProdutoMetaPreco() {
+    const path = window.location.pathname.replace(/\\/g, '/');
+
+    document.querySelectorAll('.produto-card[data-produto-preco], .produto-card-home[data-produto-preco]').forEach((card) => {
+        if (card.querySelector('.produto-meta')) return;
+
+        const precoRaw = card.getAttribute('data-produto-preco');
+        const h3 = card.querySelector('.produto-content h3, .produto-content-home h3');
+        if (!h3 || precoRaw == null || precoRaw === '') return;
+
+        const num = parseFloat(String(precoRaw).replace(',', '.'), 10);
+        if (Number.isNaN(num)) return;
+
+        const formatted = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(num);
+
+        let tamanhoLabel = card.getAttribute('data-produto-tamanho');
+        if (!tamanhoLabel) {
+            if (path.includes('mini-pudins')) tamanhoLabel = 'Mini pote';
+            else if (path.includes('pudins-classicos')) tamanhoLabel = 'Pote tradicional';
+            else tamanhoLabel = '';
+        }
+
+        const meta = document.createElement('div');
+        meta.className = 'produto-meta';
+        if (tamanhoLabel) {
+            const tSpan = document.createElement('span');
+            tSpan.className = 'produto-tamanho';
+            tSpan.textContent = tamanhoLabel;
+            meta.appendChild(tSpan);
+        }
+        const pSpan = document.createElement('span');
+        pSpan.className = 'produto-preco-card';
+        if (!tamanhoLabel) pSpan.classList.add('produto-preco-card--solo');
+        pSpan.textContent = formatted;
+        meta.appendChild(pSpan);
+        h3.insertAdjacentElement('afterend', meta);
     });
 }
 

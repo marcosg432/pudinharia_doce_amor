@@ -1,5 +1,5 @@
 /* ============================================
-   Carrinho de Compras - Senna Doce
+   Carrinho de Compras — Pudinharia Doce Sonho
    ============================================ */
 
 /* Botão flutuante para abrir carrinho */
@@ -10,11 +10,11 @@
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--dourado) 0%, var(--marrom) 100%);
+    background: linear-gradient(145deg, var(--dourado) 0%, var(--caramelo-escuro) 50%, var(--marrom-escuro) 100%);
     color: var(--branco);
-    border: none;
+    border: 1px solid rgba(232, 217, 180, 0.25);
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(92, 64, 51, 0.35);
+    box-shadow: 0 8px 28px rgba(42, 24, 16, 0.28);
     z-index: 998;
     display: flex;
     align-items: center;
@@ -23,8 +23,8 @@
 }
 
 .carrinho-toggle:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 28px rgba(92, 64, 51, 0.45);
+    transform: scale(1.06);
+    box-shadow: 0 12px 36px rgba(42, 24, 16, 0.32);
 }
 
 .carrinho-toggle svg {
@@ -72,8 +72,8 @@
     max-width: 420px;
     height: 100vh;
     height: 100dvh;
-    background: var(--branco);
-    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(180deg, var(--branco) 0%, var(--creme) 100%);
+    box-shadow: -8px 0 40px rgba(42, 24, 16, 0.12);
     z-index: 1001;
     display: flex;
     flex-direction: column;
@@ -96,10 +96,11 @@
 }
 
 .carrinho-header h2 {
-    font-family: var(--fonte-titulo);
-    font-size: 1.5rem;
-    color: var(--marrom);
+    font-family: var(--fonte-display);
+    font-size: 1.35rem;
+    color: var(--marrom-escuro);
     margin: 0;
+    letter-spacing: 0.02em;
 }
 
 .carrinho-close {
@@ -313,26 +314,37 @@
     transform: none;
 }
 
-/* Botão Adicionar ao carrinho nos produtos */
+/* Botão Adicionar ao carrinho — vitrine premium (primário) */
 .btn-adicionar-carrinho {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.35rem;
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--marrom);
-    background: var(--bege);
-    border: 1px solid var(--dourado);
-    border-radius: 6px;
+    gap: 0.4rem;
+    padding: 0.65rem 1rem;
+    font-family: var(--fonte-texto);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--marrom-escuro);
+    background: linear-gradient(155deg, #f0e8d8 0%, var(--dourado-claro) 28%, var(--dourado) 88%, var(--caramelo-escuro) 100%);
+    border: 1px solid rgba(196, 163, 90, 0.45);
+    border-radius: 999px;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    box-shadow:
+        0 1px 2px rgba(42, 24, 16, 0.06),
+        0 6px 18px -4px rgba(196, 163, 90, 0.35);
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s ease, filter 0.35s ease;
 }
 
 .btn-adicionar-carrinho:hover {
-    background: var(--dourado);
-    color: var(--branco);
+    background: linear-gradient(155deg, #f5ede0 0%, var(--dourado) 35%, var(--caramelo-escuro) 100%);
+    border-color: rgba(139, 90, 43, 0.45);
+    box-shadow:
+        0 2px 4px rgba(42, 24, 16, 0.08),
+        0 10px 28px -6px rgba(196, 163, 90, 0.45);
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.02);
 }
 
 @media (max-width: 480px) {

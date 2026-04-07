@@ -1,49 +1,33 @@
-/**
- * Servidor estático - Senna Doce
- * Usa apenas módulos nativos do Node.js (sem dependências)
- * Porta padrão 3008 (ou variável de ambiente PORT) — acessível via IP (sem domínio)
- */
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+'use strict';
 
-const PORT = parseInt(process.env.PORT, 10) || 3008;
-const MIME_TYPES = {
-  '.html': 'text/html',
-  '.js': 'text/javascript',
-  '.css': 'text/css',
-  '.json': 'application/json',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.gif': 'image/gif',
-  '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon',
-  '.webp': 'image/webp'
+const express = require('express');
+
+const app = express();
+app.disable('x-powered-by');
+
+const PORT = parseInt(process.env.PORT || '3011', 10);
+const HOST = process.env.HOST || '0.0.0.0';
+const ROOT = __dirname;
+
+const staticOpts = {
+    index: ['index.html'],
+    extensions: ['html'],
+    etag: true,
+    lastModified: true,
+    maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
+    setHeaders(res, filePath) {
+        if (filePath.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+        }
+    },
 };
 
-const server = http.createServer((req, res) => {
-  let filePath = '.' + (req.url === '/' || req.url === '' ? '/index.html' : req.url);
-  filePath = path.normalize(filePath).replace(/^(\.\.(\/|\\|$))+/, '');
+app.use(express.static(ROOT, staticOpts));
 
-  fs.readFile(filePath, (err, content) => {
-    if (err) {
-      if (err.code === 'ENOENT') {
-        res.writeHead(404);
-        res.end('Arquivo não encontrado');
-      } else {
-        res.writeHead(500);
-        res.end('Erro do servidor');
-      }
-      return;
-    }
-    const ext = path.extname(filePath);
-    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-    res.writeHead(200, { 'Content-Type': contentType });
-    res.end(content);
-  });
+app.use((req, res) => {
+    res.status(404).type('txt').send('Não encontrado');
 });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Senna Doce: http://0.0.0.0:${PORT}`);
+app.listen(PORT, HOST, () => {
+    console.log(`Cardápio em http://${HOST}:${PORT} (${process.env.NODE_ENV || 'development'})`);
 });
