@@ -14,10 +14,20 @@ const staticOpts = {
     extensions: ['html'],
     etag: true,
     lastModified: true,
-    maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
+    /* Padrão sem cache longo; imagens/fontes podem ter 7d em produção (setHeaders). */
+    maxAge: 0,
     setHeaders(res, filePath) {
-        if (filePath.endsWith('.html')) {
+        const lower = filePath.toLowerCase();
+        if (lower.endsWith('.html')) {
             res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+            return;
+        }
+        if (/\.(js|mjs|css)$/i.test(filePath)) {
+            res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+            return;
+        }
+        if (process.env.NODE_ENV === 'production' && /\.(webp|png|jpg|jpeg|gif|svg|ico|woff2?)$/i.test(filePath)) {
+            res.setHeader('Cache-Control', 'public, max-age=7d, immutable');
         }
     },
 };
