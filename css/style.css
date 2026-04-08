@@ -1917,7 +1917,7 @@ ul {
     flex-shrink: 0;
 }
 
-/* Dois WhatsApp lado a lado; carrinho ocupa a linha inteira */
+/* Carrinho + WhatsApps em coluna: ambos os atendimentos sempre visíveis (evita corte por overflow do card) */
 .produto-content-home .produto-buttons,
 .produto-content .produto-buttons {
     margin-top: auto;
@@ -1925,8 +1925,8 @@ ul {
     width: 100%;
     min-width: 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem 0.55rem;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
     align-items: stretch;
 }
 
@@ -1948,8 +1948,8 @@ ul {
     overflow-wrap: break-word;
     flex-wrap: wrap;
     box-sizing: border-box;
-    padding-left: clamp(0.4rem, 0.35rem + 2.5cqi, 0.85rem);
-    padding-right: clamp(0.4rem, 0.35rem + 2.5cqi, 0.85rem);
+    padding-left: clamp(0.45rem, 2vw, 0.85rem);
+    padding-right: clamp(0.45rem, 2vw, 0.85rem);
 }
 
 /* Segundo atendimento — tom mais suave / contorno (principal continua verde intenso) */
@@ -1975,21 +1975,6 @@ ul {
 
 .btn-produto-whatsapp.produto-whatsapp--atendimento2:hover {
     box-shadow: 0 5px 16px rgba(18, 140, 126, 0.22);
-}
-
-/* Card estreito (ex.: grid 3–4 colunas no desktop): empilha os WhatsApps */
-@container produto-card (max-width: 420px) {
-    .produto-content-home .produto-buttons,
-    .produto-content .produto-buttons {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 400px) {
-    .produto-content-home .produto-buttons,
-    .produto-content .produto-buttons {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* ============================================

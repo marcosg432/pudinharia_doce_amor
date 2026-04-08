@@ -47,7 +47,7 @@
             if (!primary) return;
 
             const href = primary.getAttribute('href') || '';
-            if (!href.includes('wa.me')) return;
+            if (!/wa\.me/i.test(href) && !/api\.whatsapp\.com/i.test(href)) return;
 
             const msg = getWaMessageFromHref(href);
             const sec = document.createElement('a');
@@ -215,9 +215,18 @@
         });
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    function initWhatsAppUiCards() {
         initDualWhatsAppOnCards();
         initRotuloWhatsAppPrincipal();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initWhatsAppUiCards();
         initProdutoModal();
+    });
+
+    /* Garante 2º botão após tudo carregar (ex.: cache/antigas ordens de script no servidor). */
+    window.addEventListener('load', function () {
+        initWhatsAppUiCards();
     });
 })();
