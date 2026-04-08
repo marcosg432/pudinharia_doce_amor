@@ -5,6 +5,19 @@
 (function () {
     'use strict';
 
+    /** Fallback se config.js no deploy estiver sem telefoneWhatsAppAtendimento2 (alinhado a js/config.js). */
+    var DEFAULT_WHATSAPP_ATENDIMENTO_2 = '5531999568591';
+
+    function resolveWhatsAppAtendimento2() {
+        var raw =
+            typeof CONFIG !== 'undefined' && CONFIG.telefoneWhatsAppAtendimento2 != null
+                ? String(CONFIG.telefoneWhatsAppAtendimento2)
+                : '';
+        var digits = raw.replace(/\D/g, '');
+        if (digits.length >= 10) return digits;
+        return String(DEFAULT_WHATSAPP_ATENDIMENTO_2).replace(/\D/g, '');
+    }
+
     function getWaMessageFromHref(href) {
         if (!href) return '';
         try {
@@ -22,9 +35,8 @@
     }
 
     function initDualWhatsAppOnCards() {
-        const phone2 = typeof CONFIG !== 'undefined' && CONFIG.telefoneWhatsAppAtendimento2;
+        const phone2 = resolveWhatsAppAtendimento2();
         const label = (typeof CONFIG !== 'undefined' && CONFIG.rotuloWhatsAppAtendimento2) || 'Atendimento 2';
-        if (!phone2) return;
 
         document.querySelectorAll('.produto-buttons').forEach((wrap) => {
             if (wrap.querySelector('.produto-whatsapp--atendimento2')) return;
@@ -106,9 +118,8 @@
         const modal = document.getElementById('produtoModal');
         if (!modal) return;
 
-        const phone2 = typeof CONFIG !== 'undefined' && CONFIG.telefoneWhatsAppAtendimento2;
+        const phone2 = resolveWhatsAppAtendimento2();
         const label = (typeof CONFIG !== 'undefined' && CONFIG.rotuloWhatsAppAtendimento2) || 'Atendimento 2';
-        if (!phone2) return;
 
         const primary = modal.querySelector('a.modal-produto-whatsapp:not(.modal-produto-whatsapp--atendimento2)');
         if (!primary || modal.querySelector('.modal-produto-whatsapp--atendimento2')) return;
