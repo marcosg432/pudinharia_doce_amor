@@ -1116,10 +1116,13 @@ ul {
 
 .produto-card-home,
 .produto-card {
+    container-name: produto-card;
+    container-type: inline-size;
     display: flex;
     flex-direction: column;
     height: 100%;
     min-height: 0;
+    min-width: 0;
     background:
         linear-gradient(165deg, rgba(255, 254, 251, 0.98) 0%, rgba(250, 246, 240, 0.96) 45%, rgba(245, 238, 228, 0.94) 100%);
     border-radius: var(--raio-vitrine);
@@ -1189,6 +1192,7 @@ ul {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    min-width: 0;
     padding: clamp(1.55rem, 3.5vw, 1.85rem) clamp(1.25rem, 3vw, 1.65rem) clamp(1.6rem, 3.5vw, 1.9rem);
     background: transparent;
 }
@@ -1252,6 +1256,16 @@ ul {
     text-transform: uppercase;
     color: var(--dourado-escuro);
     opacity: 0.92;
+}
+
+/* Texto de porção (frase longa) — legível, sem caixa alta forçada */
+.produto-tamanho--porcao {
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.35;
+    max-width: min(100%, 11.5rem);
 }
 
 .produto-preco-card {
@@ -1850,6 +1864,7 @@ ul {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    min-width: 0;
     padding: 1.45rem 1.35rem 1.55rem;
     background: transparent;
 }
@@ -1902,13 +1917,16 @@ ul {
     flex-shrink: 0;
 }
 
+/* Dois WhatsApp lado a lado; carrinho ocupa a linha inteira */
 .produto-content-home .produto-buttons,
 .produto-content .produto-buttons {
     margin-top: auto;
     padding-top: 0.85rem;
+    width: 100%;
+    min-width: 0;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.55rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem 0.55rem;
     align-items: stretch;
 }
 
@@ -1920,9 +1938,58 @@ ul {
 .produto-content-home .produto-buttons .btn-produto-whatsapp,
 .produto-content .produto-buttons .produto-whatsapp {
     min-height: 36px;
-    flex-shrink: 0;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+    flex-wrap: wrap;
     box-sizing: border-box;
+    padding-left: clamp(0.4rem, 0.35rem + 2.5cqi, 0.85rem);
+    padding-right: clamp(0.4rem, 0.35rem + 2.5cqi, 0.85rem);
+}
+
+/* Segundo atendimento — tom mais suave / contorno (principal continua verde intenso) */
+.produto-whatsapp.produto-whatsapp--atendimento2 {
+    background: linear-gradient(145deg, #f0faf4 0%, #d4eee2 50%, #b8e0cc 100%);
+    color: #0a5c42 !important;
+    border: 1px solid rgba(18, 140, 126, 0.35);
+    box-shadow: 0 2px 8px rgba(18, 140, 126, 0.12);
+    font-weight: 600;
+}
+
+.produto-whatsapp.produto-whatsapp--atendimento2:hover {
+    box-shadow: 0 5px 16px rgba(18, 140, 126, 0.2);
+    opacity: 1;
+}
+
+.btn-produto-whatsapp.produto-whatsapp--atendimento2 {
+    background: linear-gradient(145deg, #eef8f2 0%, #cfe9da 100%);
+    color: #0a5c42 !important;
+    border: 1px solid rgba(18, 140, 126, 0.32);
+    box-shadow: 0 2px 8px rgba(18, 140, 126, 0.1);
+}
+
+.btn-produto-whatsapp.produto-whatsapp--atendimento2:hover {
+    box-shadow: 0 5px 16px rgba(18, 140, 126, 0.22);
+}
+
+/* Card estreito (ex.: grid 3–4 colunas no desktop): empilha os WhatsApps */
+@container produto-card (max-width: 420px) {
+    .produto-content-home .produto-buttons,
+    .produto-content .produto-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 400px) {
+    .produto-content-home .produto-buttons,
+    .produto-content .produto-buttons {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ============================================
@@ -2075,6 +2142,40 @@ ul {
     height: 18px;
 }
 
+.modal-produto-wa-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+    align-items: stretch;
+    margin-bottom: 0.25rem;
+    min-width: 0;
+}
+
+.modal-produto-wa-row .modal-produto-whatsapp {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    white-space: normal;
+    overflow-wrap: break-word;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+.modal-produto-whatsapp.modal-produto-whatsapp--atendimento2 {
+    background: linear-gradient(145deg, #3d9e7a 0%, #2a7a5f 100%);
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 14px rgba(42, 122, 95, 0.28);
+}
+
+.modal-produto-whatsapp.modal-produto-whatsapp--atendimento2:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 6px 20px rgba(42, 122, 95, 0.34);
+}
+
 .modal-produto-ingredientes-wrap.no-ingredientes {
     display: none;
 }
@@ -2127,6 +2228,11 @@ ul {
         min-height: 50px;
         padding: 0.85rem 1.35rem;
         font-size: 1rem;
+    }
+
+    .modal-produto-wa-row {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
     }
 }
 

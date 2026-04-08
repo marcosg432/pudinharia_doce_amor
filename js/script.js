@@ -252,8 +252,9 @@ function initProdutoMetaPreco() {
         let tamanhoLabel = card.getAttribute('data-produto-tamanho');
         if (!tamanhoLabel) {
             if (path.includes('mini-pudins')) tamanhoLabel = 'Mini pote';
-            else if (path.includes('pudins-classicos')) tamanhoLabel = 'Pote tradicional';
-            else tamanhoLabel = '';
+            else if (path.includes('pudins-classicos')) {
+                tamanhoLabel = 'a porção serve de 8 a 10 pedaços';
+            } else tamanhoLabel = '';
         }
 
         const meta = document.createElement('div');
@@ -261,6 +262,9 @@ function initProdutoMetaPreco() {
         if (tamanhoLabel) {
             const tSpan = document.createElement('span');
             tSpan.className = 'produto-tamanho';
+            if (tamanhoLabel.includes('pedaços') || tamanhoLabel.length > 20) {
+                tSpan.classList.add('produto-tamanho--porcao');
+            }
             tSpan.textContent = tamanhoLabel;
             meta.appendChild(tSpan);
         }
