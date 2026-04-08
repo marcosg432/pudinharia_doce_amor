@@ -1953,6 +1953,13 @@ ul {
 }
 
 /* Segundo atendimento — tom mais suave / contorno (principal continua verde intenso) */
+.produto-whatsapp.produto-whatsapp--atendimento2,
+.btn-produto-whatsapp.produto-whatsapp--atendimento2 {
+    display: inline-flex !important;
+    visibility: visible;
+    opacity: 1;
+}
+
 .produto-whatsapp.produto-whatsapp--atendimento2 {
     background: linear-gradient(145deg, #f0faf4 0%, #d4eee2 50%, #b8e0cc 100%);
     color: #0a5c42 !important;

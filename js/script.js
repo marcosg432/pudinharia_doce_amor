@@ -275,6 +275,10 @@ function initProdutoMetaPreco() {
         meta.appendChild(pSpan);
         h3.insertAdjacentElement('afterend', meta);
     });
+
+    if (typeof window.pudinhariaRunDualWhatsApp === 'function') {
+        window.pudinhariaRunDualWhatsApp();
+    }
 }
 
 /**

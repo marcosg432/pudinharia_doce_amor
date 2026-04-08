@@ -34,6 +34,16 @@
         return `https://wa.me/${p}?text=${encodeURIComponent(message)}`;
     }
 
+    function isWhatsAppHref(href) {
+        if (!href || href === '#') return false;
+        const h = href.toLowerCase();
+        return (
+            h.includes('wa.me') ||
+            h.includes('whatsapp.com') ||
+            h.includes('api.whatsapp')
+        );
+    }
+
     function initDualWhatsAppOnCards() {
         const phone2 = resolveWhatsAppAtendimento2();
         const label = (typeof CONFIG !== 'undefined' && CONFIG.rotuloWhatsAppAtendimento2) || 'Atendimento 2';
@@ -46,10 +56,18 @@
             );
             if (!primary) return;
 
-            const href = primary.getAttribute('href') || '';
-            if (!/wa\.me/i.test(href) && !/api\.whatsapp\.com/i.test(href)) return;
+            const card = wrap.closest('.produto-card, .produto-card-home');
+            const dataWa = card ? card.getAttribute('data-produto-whatsapp') || '' : '';
 
-            const msg = getWaMessageFromHref(href);
+            const primaryHref = primary.getAttribute('href') || '';
+            let href = primaryHref;
+            if (!isWhatsAppHref(href) && isWhatsAppHref(dataWa)) {
+                href = dataWa;
+            }
+            if (!isWhatsAppHref(href)) return;
+
+            const msg = getWaMessageFromHref(primaryHref) || getWaMessageFromHref(dataWa) || getWaMessageFromHref(href);
+
             const sec = document.createElement('a');
             sec.href = buildWaMeUrl(phone2, msg);
             sec.target = '_blank';
@@ -73,6 +91,9 @@
             primary.insertAdjacentElement('afterend', sec);
         });
     }
+
+    /** Para script.js chamar depois de montar .produto-meta (deploys com HTML/URLs diferentes). */
+    window.pudinhariaRunDualWhatsApp = initDualWhatsAppOnCards;
 
     /** Texto do primeiro WhatsApp (verde principal) — alinhado ao "Atendimento 2" */
     function initRotuloWhatsAppPrincipal() {
@@ -223,10 +244,12 @@
     document.addEventListener('DOMContentLoaded', function () {
         initWhatsAppUiCards();
         initProdutoModal();
+        setTimeout(initDualWhatsAppOnCards, 0);
     });
 
     /* Garante 2º botão após tudo carregar (ex.: cache/antigas ordens de script no servidor). */
     window.addEventListener('load', function () {
         initWhatsAppUiCards();
+        setTimeout(initDualWhatsAppOnCards, 100);
     });
 })();
