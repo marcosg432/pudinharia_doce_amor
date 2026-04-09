@@ -3,6 +3,8 @@
    Identidade gourmet: caramelo, creme, chocolate e dourado
    ============================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 /* Variáveis CSS */
 :root {
     --branco: #fffdf9;
@@ -27,6 +29,7 @@
     --fonte-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
     --fonte-titulo: 'Cormorant Garamond', Georgia, serif;
     --fonte-texto: 'Outfit', -apple-system, sans-serif;
+    --fonte-script: 'Great Vibes', cursive;
     --raio-card: 20px;
     /* Proporção do quadro da foto (≈ retrato de celular). Com object-fit: cover,
        se a imagem tiver a mesma proporção, não há corte — sem bordas vazias.
@@ -2170,6 +2173,363 @@ ul {
 
 .modal-produto-ingredientes-wrap.no-ingredientes {
     display: none;
+}
+
+.modal-produto-tamanhos-wrap {
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.1rem;
+    background: linear-gradient(145deg, rgba(196, 163, 90, 0.08) 0%, rgba(61, 43, 36, 0.04) 100%);
+    border: 1px solid rgba(196, 163, 90, 0.2);
+    border-radius: 12px;
+}
+
+.modal-produto-tamanhos-wrap.no-tamanhos {
+    display: none;
+}
+
+.modal-produto-tamanhos-heading {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--dourado);
+    margin: 0 0 0.55rem;
+}
+
+.modal-produto-tamanhos {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--marrom);
+    line-height: 1.55;
+}
+
+.modal-produto-tamanhos li {
+    margin-bottom: 0.35rem;
+}
+
+.modal-produto-tamanhos li:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
+   Cardápio — bloco institucional (pós-hero)
+   ============================================ */
+.cardapio-info-destaque {
+    padding: 3rem 0 2.5rem;
+    background: linear-gradient(180deg, #faf7f2 0%, #f3ebe1 50%, #faf7f2 100%);
+    border-bottom: 1px solid rgba(196, 163, 90, 0.15);
+}
+
+.cardapio-info-destaque-inner {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.cardapio-info-kicker {
+    font-family: var(--fonte-corpo);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin: 0 0 0.65rem;
+}
+
+.cardapio-info-titulo {
+    font-family: var(--fonte-display);
+    font-size: clamp(1.65rem, 4vw, 2.15rem);
+    font-weight: 600;
+    color: var(--marrom-escuro);
+    line-height: 1.2;
+    margin: 0 0 1rem;
+    letter-spacing: 0.02em;
+}
+
+.cardapio-info-lead {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--marrom);
+    margin: 0 0 1.5rem;
+    opacity: 0.92;
+}
+
+.cardapio-info-pontos {
+    list-style: none;
+    margin: 0 0 1.35rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.cardapio-info-pontos li {
+    position: relative;
+    padding-left: 1.35rem;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--marrom);
+}
+
+.cardapio-info-pontos li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dourado);
+    opacity: 0.85;
+}
+
+.cardapio-info-pontos strong {
+    color: var(--marrom-escuro);
+    font-weight: 600;
+}
+
+.cardapio-info-nota {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--marrom);
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(196, 163, 90, 0.2);
+    opacity: 0.88;
+}
+
+/* Bloco “Informações adicionais” alinhado ao flyer (parchment / premium) */
+.cardapio-info-destaque--flyer {
+    position: relative;
+    background: linear-gradient(165deg, #faf6ef 0%, #f0e8dc 42%, #f7f1e8 100%);
+    overflow: hidden;
+}
+
+.cardapio-info-destaque--flyer::before {
+    content: '';
+    position: absolute;
+    top: 1.25rem;
+    right: max(1rem, 4vw);
+    width: 44px;
+    height: 44px;
+    background-image: radial-gradient(circle, var(--marrom) 1.5px, transparent 1.6px);
+    background-size: 9px 9px;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.cardapio-info-destaque--flyer::after {
+    content: '';
+    position: absolute;
+    bottom: -1.5rem;
+    left: -2rem;
+    width: 7rem;
+    height: 5rem;
+    border: 1px solid rgba(74, 48, 36, 0.14);
+    border-radius: 55% 45% 48% 52%;
+    transform: rotate(-14deg);
+    pointer-events: none;
+}
+
+.cardapio-info-destaque--flyer .cardapio-info-destaque-inner {
+    position: relative;
+    z-index: 1;
+}
+
+.cardapio-info-flyer-title {
+    font-family: var(--fonte-script);
+    font-size: clamp(2rem, 5vw, 2.85rem);
+    font-weight: 400;
+    color: var(--marrom-escuro);
+    text-align: center;
+    margin: 0 0 1.5rem;
+    line-height: 1.2;
+}
+
+.cardapio-info-flyer-text {
+    font-family: var(--fonte-display);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--marrom-escuro);
+    margin: 0 auto 1.2rem;
+    max-width: 36rem;
+    text-align: center;
+}
+
+.cardapio-info-flyer-cta {
+    font-family: var(--fonte-script);
+    font-size: clamp(1.45rem, 3.2vw, 1.95rem);
+    text-align: center;
+    color: var(--marrom-escuro);
+    margin: 1.75rem 0 0.45rem;
+}
+
+.cardapio-info-flyer-wa-wrap {
+    text-align: center;
+    margin: 0;
+}
+
+.cardapio-info-flyer-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--fonte-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--marrom-escuro);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.cardapio-info-flyer-wa:hover {
+    color: var(--caramelo-escuro);
+}
+
+.cardapio-info-flyer-wa-icon {
+    color: #25d366;
+    flex-shrink: 0;
+}
+
+/* Modal regras de encomenda (antes do envio ao WhatsApp) */
+.modal-regras-encomenda-overlay {
+    z-index: 2100;
+}
+
+.modal-regras-encomenda-overlay .modal-regras-box {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    max-height: min(85vh, 560px);
+    overflow-y: auto;
+    background: var(--branco);
+    border-radius: 16px;
+    padding: 1.75rem 1.75rem 1.5rem;
+    box-shadow: 0 25px 80px rgba(42, 24, 16, 0.28);
+    transform: scale(0.94);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+
+.modal-regras-encomenda-overlay.ativo .modal-regras-box {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-regras-titulo {
+    font-family: var(--fonte-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--marrom-escuro);
+    margin: 0 0 1rem;
+    line-height: 1.25;
+}
+
+.modal-regras-lista {
+    margin: 0 0 1.25rem;
+    padding-left: 1.2rem;
+    color: var(--marrom);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.modal-regras-lista li {
+    margin-bottom: 0.55rem;
+}
+
+.modal-regras-lista li:last-child {
+    margin-bottom: 0;
+}
+
+.modal-regras-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.92rem;
+    color: var(--marrom);
+    cursor: pointer;
+    margin-bottom: 1.25rem;
+    line-height: 1.45;
+}
+
+.modal-regras-checkbox-label input {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--dourado);
+}
+
+.modal-regras-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    justify-content: flex-end;
+}
+
+.modal-regras-voltar {
+    background: transparent;
+    border: 1px solid rgba(61, 43, 36, 0.25);
+    color: var(--marrom);
+}
+
+.modal-regras-voltar:hover {
+    border-color: var(--marrom);
+    background: rgba(61, 43, 36, 0.04);
+}
+
+.modal-regras-continuar:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.modal-regras-rodape {
+    margin: 1rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(196, 163, 90, 0.22);
+    text-align: center;
+}
+
+.modal-regras-rodape-script {
+    font-family: var(--fonte-script);
+    font-size: 1.4rem;
+    color: var(--marrom-escuro);
+    margin: 0 0 0.45rem;
+    line-height: 1.2;
+}
+
+.modal-regras-wa-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-family: var(--fonte-display);
+    font-weight: 600;
+    font-size: 1rem;
+    color: #128c7e;
+    text-decoration: none;
+}
+
+.modal-regras-wa-link:hover {
+    text-decoration: underline;
+}
+
+.modal-regras-wa-link svg {
+    flex-shrink: 0;
+    color: #25d366;
+}
+
+@media (max-width: 480px) {
+    .cardapio-info-destaque {
+        padding: 2.25rem 0 2rem;
+    }
+
+    .modal-regras-acoes {
+        flex-direction: column-reverse;
+    }
+
+    .modal-regras-acoes .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 /* Responsivo modal */

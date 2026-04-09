@@ -14,5 +14,31 @@ const CONFIG = {
     /** Perfil oficial no Instagram */
     urlInstagram: "https://www.instagram.com/pudinhariadocesonho",
     /** Nome da empresa para identificação e chave do localStorage */
-    nomeEmpresa: "Pudinharia Doce Sonho"
+    nomeEmpresa: "Pudinharia Doce Sonho",
+    /**
+     * Regras exibidas no modal antes de enviar o pedido ao WhatsApp (array de strings).
+     * Deixe vazio [] para não mostrar o passo extra.
+     */
+    regrasEncomendaTitulo: "Encomendas",
+    regrasEncomendaItens: [
+        "Para encomendas pedimos 24 hs para preparação.",
+        "50% de sinal no ato do pedido, para confirmação do pedido.",
+        "Fazemos entregas (consultar taxa).",
+        "Retirada: combinar local e horário."
+    ],
+    /** Texto cursivo abaixo das regras no modal (opcional; vazio oculta) */
+    regrasEncomendaRodapeCursive: "Aceitamos encomendas",
+    /** Telefone exibido no rodapé do modal de regras */
+    regrasEncomendaRodapeTelefoneLabel: "(31) 99710-7058",
+    /**
+     * Tabela de tamanhos exibida no modal de cada produto (referência oficial do cardápio).
+     * Deixe tamanhosReferenciaItens vazio [] para voltar a usar só data-produto-tamanhos nos cards.
+     */
+    tamanhosReferenciaTitulo: "Tamanhos",
+    tamanhosReferenciaItens: [
+        "150 g — porção única",
+        "250 g — 2 fatias",
+        "500 g — 4 a 5 fatias",
+        "1.100 kg — 8 a 10 fatias"
+    ]
 };

@@ -139,6 +139,18 @@
         const modal = document.getElementById('produtoModal');
         if (!modal) return;
 
+        let tamanhosBlock = modal.querySelector('.modal-produto-tamanhos-wrap');
+        if (!tamanhosBlock) {
+            const descElInit = modal.querySelector('.modal-produto-descricao');
+            if (descElInit) {
+                tamanhosBlock = document.createElement('div');
+                tamanhosBlock.className = 'modal-produto-tamanhos-wrap no-tamanhos';
+                tamanhosBlock.innerHTML =
+                    '<h4 class="modal-produto-tamanhos-heading">Tamanhos</h4><ul class="modal-produto-tamanhos"></ul>';
+                descElInit.insertAdjacentElement('afterend', tamanhosBlock);
+            }
+        }
+
         const phone2 = resolveWhatsAppAtendimento2();
         const label = (typeof CONFIG !== 'undefined' && CONFIG.rotuloWhatsAppAtendimento2) || 'Atendimento 2';
 
@@ -173,6 +185,7 @@
             const img = card.getAttribute('data-produto-imagem') || '';
             const pedido = card.getAttribute('data-produto-pedido') || '';
             const ingredientes = card.getAttribute('data-produto-ingredientes') || '';
+            const tamanhosRaw = card.getAttribute('data-produto-tamanhos') || '';
 
             const tituloEl = modal.querySelector('.modal-produto-nome');
             const descEl = modal.querySelector('.modal-produto-descricao');
@@ -205,6 +218,45 @@
                     ul.appendChild(li);
                 } else {
                     wrapIng.classList.add('no-ingredientes');
+                }
+            }
+
+            const tb = modal.querySelector('.modal-produto-tamanhos-wrap');
+            if (tb) {
+                const headingEl = tb.querySelector('.modal-produto-tamanhos-heading');
+                const tul = tb.querySelector('.modal-produto-tamanhos');
+                if (tul) {
+                    tul.innerHTML = '';
+                    const cfgTitulo =
+                        typeof CONFIG !== 'undefined' && CONFIG.tamanhosReferenciaTitulo
+                            ? String(CONFIG.tamanhosReferenciaTitulo).trim()
+                            : '';
+                    const cfgLines =
+                        typeof CONFIG !== 'undefined' && Array.isArray(CONFIG.tamanhosReferenciaItens)
+                            ? CONFIG.tamanhosReferenciaItens
+                                  .map((s) => String(s).trim())
+                                  .filter(Boolean)
+                            : [];
+                    const cardLines = tamanhosRaw
+                        .split('|')
+                        .map((s) => s.trim())
+                        .filter(Boolean);
+                    const lines = cfgLines.length > 0 ? cfgLines : cardLines;
+                    if (headingEl) {
+                        headingEl.textContent =
+                            cfgTitulo ||
+                            (cfgLines.length > 0 ? 'Tamanhos' : cardLines.length > 0 ? 'Tamanhos e porções' : 'Tamanhos');
+                    }
+                    if (lines.length) {
+                        tb.classList.remove('no-tamanhos');
+                        lines.forEach((line) => {
+                            const li = document.createElement('li');
+                            li.textContent = line;
+                            tul.appendChild(li);
+                        });
+                    } else {
+                        tb.classList.add('no-tamanhos');
+                    }
                 }
             }
 
